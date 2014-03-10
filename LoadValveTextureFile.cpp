@@ -69,7 +69,11 @@ ValveTextureFileHandler::ValveTextureFileHandler() : state(Ready), currentFrame(
 ValveTextureFileHandler::~ValveTextureFileHandler() {}
 
 bool ValveTextureFileHandler::canRead() const {
-    return canRead(device());
+    switch (state) {
+    case Read:  return (vlUInt)currentFrame < vtf.GetFrameCount();
+    case Error: return false;
+    default:    return canRead(device());
+    }
 }
 
 int ValveTextureFileHandler::currentImageNumber() const {
@@ -96,7 +100,7 @@ bool ValveTextureFileHandler::jumpToImage(int imageNumber) {
 
 bool ValveTextureFileHandler::jumpToNextImage() {
     if (!read()) return false;
-    if (currentFrame > 0 && (vlUInt)currentFrame + 1 == vtf.GetFrameCount()) return false;
+    if (currentFrame > 0 && (vlUInt)currentFrame >= vtf.GetFrameCount()) return false;
     ++ currentFrame;
     return true;
 }
@@ -135,14 +139,12 @@ bool ValveTextureFileHandler::supportsOption(ImageOption option) const {
 }
 
 bool ValveTextureFileHandler::read(QImage *image) {
-    qDebug("read frame %d", currentFrame+1);
-
     if (!image) {
         qWarning("ValveTextureFileHandler::read() called with 0 pointer");
         return false;
     }
 
-    if (!read() || (currentFrame > 0 && (vlUInt)currentFrame + 1 >= vtf.GetFrameCount())) {
+    if (!read() || (vlUInt)currentFrame >= vtf.GetFrameCount()) {
         return false;
     }
 
@@ -181,7 +183,7 @@ bool ValveTextureFileHandler::read(QImage *image) {
         }
     }
 
-    const vlByte* frame = vtf.GetData(currentFrame + 1, 0, 0, 0);
+    const vlByte* frame = vtf.GetData(currentFrame, 0, 0, 0);
 
     if (!VTFLib::CVTFFile::Convert(frame, image->bits(), width, height, srcformat, dstformat)) {
         qWarning(VTFLib::LastError.Get());
@@ -209,6 +211,8 @@ bool ValveTextureFileHandler::read()  {
         return false;
     }
 
+    currentFrame = 0;
     state = Read;
+
     return true;
 }
