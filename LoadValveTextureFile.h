@@ -16,3 +16,55 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#ifndef QVTF_LOAD_VALVE_TEXTURE_FILE_H
+#define QVTF_LOAD_VALVE_TEXTURE_FILE_H
+
+#include <QImageIOPlugin>
+#include <VTFFile.h>
+
+class LoadValveTextureFilePlugin : public QImageIOPlugin {
+    Q_OBJECT
+
+public:
+
+    Capabilities capabilities(QIODevice *device, const QByteArray &format) const;
+    QImageIOHandler* create(QIODevice *device, const QByteArray &format) const;
+    QStringList keys() const;
+};
+
+class ValveTextureFileHandler : public QImageIOHandler {
+
+public:
+    ValveTextureFileHandler();
+    ~ValveTextureFileHandler();
+
+    bool canRead() const;
+    int currentImageNumber() const;
+    QRect currentImageRect() const;
+    int imageCount() const;
+    bool jumpToImage(int imageNumber);
+    bool jumpToNextImage();
+    int loopCount() const;
+    int nextImageDelay() const;
+    QVariant option(ImageOption option) const;
+    bool read(QImage *image);
+    bool supportsOption(ImageOption option) const;
+
+    static bool canRead(QIODevice *device);
+
+    bool read();
+
+private:
+
+    enum State {
+        Ready,
+        Read,
+        Error
+    };
+
+    State state;
+    int currentFrame;
+    VTFLib::CVTFFile vtf;
+};
+
+#endif
