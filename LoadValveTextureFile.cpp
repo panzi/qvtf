@@ -122,17 +122,29 @@ QVariant ValveTextureFileHandler::option(ImageOption option) const {
         if (state == Read) {
             return QSize(vtf.GetWidth(), vtf.GetHeight());
         }
-    case ImageFormat: // TODO
+        break;
+    case ImageFormat:
+        if (state == Read) {
+            if (VTFLib::CVTFFile::GetImageFormatInfo(vtf.GetFormat()).uiAlphaBitsPerPixel > 0) {
+                return QImage::Format_ARGB32;
+            }
+            else {
+                return QImage::Format_RGB888;
+            }
+        }
+        break;
     default:
-        return QVariant();
+        break;
     }
+
+    return QVariant();
 }
 
 bool ValveTextureFileHandler::supportsOption(ImageOption option) const {
     switch (option) {
-    case Animation: return true;
-    case Size: return true;
-    case ImageFormat: // TODO
+    case Animation:   return true;
+    case Size:        return true;
+    case ImageFormat: return true;
     default:
         return false;
     }
@@ -154,26 +166,19 @@ bool ValveTextureFileHandler::read(QImage *image) {
     VTFImageFormat srcformat = vtf.GetFormat();
     VTFImageFormat dstformat;
 
-    switch (srcformat) {
-    case IMAGE_FORMAT_RGB888:
-        qformat   = QImage::Format_RGB888;
-        dstformat = srcformat;
-        break;
-
-    case IMAGE_FORMAT_ABGR8888:
+    if (VTFLib::CVTFFile::GetImageFormatInfo(srcformat).uiAlphaBitsPerPixel > 0) {
         qformat   = QImage::Format_ARGB32;
-        dstformat = IMAGE_FORMAT_ARGB8888;
-        break;
+        dstformat = IMAGE_FORMAT_RGBA8888;
+    }
+    else {
+        qformat   = QImage::Format_RGB888;
+        dstformat = IMAGE_FORMAT_RGB888;
+    }
 
-    default:
-        if (VTFLib::CVTFFile::GetImageFormatInfo(srcformat).uiAlphaBitsPerPixel > 0) {
-            qformat   = QImage::Format_ARGB32;
-            dstformat = IMAGE_FORMAT_ARGB8888;
-        }
-        else {
-            qformat   = QImage::Format_RGB888;
-            dstformat = IMAGE_FORMAT_RGB888;
-        }
+    const vlByte* frame = vtf.GetData(currentFrame, 0, 0, 0);
+
+    if (!frame) {
+        return false;
     }
 
     if ((vlUInt)image->width() != width || (vlUInt)image->height() != height || image->format() != qformat) {
@@ -183,11 +188,23 @@ bool ValveTextureFileHandler::read(QImage *image) {
         }
     }
 
-    const vlByte* frame = vtf.GetData(currentFrame, 0, 0, 0);
+    uchar *bits = image->bits();
 
-    if (!VTFLib::CVTFFile::Convert(frame, image->bits(), width, height, srcformat, dstformat)) {
+    if (!VTFLib::CVTFFile::Convert(frame, bits, width, height, srcformat, dstformat)) {
         qDebug("%s", VTFLib::LastError.Get());
         return false;
+    }
+
+    if (dstformat == IMAGE_FORMAT_RGBA8888) {
+        // For some reason the colors are swapped around this way.
+        // I don't know if the error is in VTFLib, Qt or my usage of either.
+        for (size_t i = 0, n = width * height * 4; i < n; i += 4) {
+            uchar b = bits[i + 0];
+            uchar r = bits[i + 2];
+
+            bits[i + 0] = r;
+            bits[i + 2] = b;
+        }
     }
 
     ++ currentFrame;
