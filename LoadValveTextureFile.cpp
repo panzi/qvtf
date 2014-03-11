@@ -186,7 +186,7 @@ bool ValveTextureFileHandler::read(QImage *image) {
     const vlByte* frame = vtf.GetData(currentFrame, 0, 0, 0);
 
     if (!VTFLib::CVTFFile::Convert(frame, image->bits(), width, height, srcformat, dstformat)) {
-        qWarning(VTFLib::LastError.Get());
+        qDebug("%s", VTFLib::LastError.Get());
         return false;
     }
 
@@ -206,7 +206,7 @@ bool ValveTextureFileHandler::read()  {
     QByteArray data = device()->readAll();
 
     if (!vtf.Load((const vlVoid*)data.data(), (vlSize)data.size())) {
-        qWarning(VTFLib::LastError.Get());
+        qWarning("%s", VTFLib::LastError.Get());
         state = Error;
         return false;
     }
