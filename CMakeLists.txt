@@ -30,8 +30,8 @@ include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS})
 
 # ---- build library ----------------------------------------------------------
-qt4_wrap_cpp(vtf_MOC LoadValveTextureFile.h)
-add_library(qvtf SHARED LoadValveTextureFile.cpp LoadValveTextureFile.h ${vtf_MOC})
+qt4_wrap_cpp(vtf_MOC ValveTextureFile.h)
+add_library(qvtf SHARED ValveTextureFile.cpp ValveTextureFile.h ${vtf_MOC})
 target_link_libraries(qvtf ${QT_LIBRARIES} ${VTFLIB_LIBRARIES})
 
 # ---- install target ---------------------------------------------------------

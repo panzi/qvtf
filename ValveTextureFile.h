@@ -22,7 +22,7 @@
 #include <QImageIOPlugin>
 #include <VTFFile.h>
 
-class LoadValveTextureFilePlugin : public QImageIOPlugin {
+class ValveTextureFilePlugin : public QImageIOPlugin {
     Q_OBJECT
 
 public:

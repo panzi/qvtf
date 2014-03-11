@@ -16,15 +16,16 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "LoadValveTextureFile.h"
+#include "ValveTextureFile.h"
 
 #include <VTFLib.h>
 #include <QImage>
 #include <QVariant>
 
-Q_EXPORT_PLUGIN2(LoadValveTextureFile, LoadValveTextureFilePlugin)
+Q_EXPORT_STATIC_PLUGIN(ValveTextureFilePlugin)
+Q_EXPORT_PLUGIN2(ValveTextureFile, ValveTextureFilePlugin)
 
-QImageIOPlugin::Capabilities LoadValveTextureFilePlugin::capabilities(QIODevice *device, const QByteArray &format) const {
+QImageIOPlugin::Capabilities ValveTextureFilePlugin::capabilities(QIODevice *device, const QByteArray &format) const {
     if (format.isNull() && !device) {
         return 0;
     }
@@ -40,11 +41,11 @@ QImageIOPlugin::Capabilities LoadValveTextureFilePlugin::capabilities(QIODevice 
     return CanRead;
 }
 
-QStringList LoadValveTextureFilePlugin::keys() const {
+QStringList ValveTextureFilePlugin::keys() const {
     return QStringList() << "vtf";
 }
 
-QImageIOHandler* LoadValveTextureFilePlugin::create(QIODevice *device, const QByteArray &format) const {
+QImageIOHandler* ValveTextureFilePlugin::create(QIODevice *device, const QByteArray &format) const {
     if (format.isNull() || format.toLower() == "vtf") {
         ValveTextureFileHandler* handler = new ValveTextureFileHandler();
         handler->setDevice(device);
