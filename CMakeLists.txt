@@ -20,11 +20,7 @@ elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic -Werror -Wno-write-strings -O3")
 endif()
 
-include_directories(
-	${PIXBUF_INCLUDE_DIRS}
-	${VTFLIB_INCLUDE_DIRS})
-
-add_definitions(-DGDK_PIXBUF_ENABLE_BACKEND)
+include_directories(${VTFLIB_INCLUDE_DIRS})
 
 if(NOT(${CMAKE_SYSTEM_NAME} STREQUAL "Windows"))
 	add_definitions(-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE)
