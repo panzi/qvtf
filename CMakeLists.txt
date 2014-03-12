@@ -5,6 +5,7 @@ project(qvtf)
 # ---- dependencies -----------------------------------------------------------
 find_package(Qt4 REQUIRED)
 find_package(PkgConfig REQUIRED)
+find_package(KDE4) # optional, only for extra .desktop file installation
 
 pkg_check_modules(VTFLIB REQUIRED VTFLib)
 
@@ -37,11 +38,15 @@ target_link_libraries(qvtf ${QT_LIBRARIES} ${VTFLIB_LIBRARIES})
 # ---- install target ---------------------------------------------------------
 install(TARGETS qvtf DESTINATION "${QT_IMAGEFORMATS_PLUGINS_DIR}")
 
-# ---- uninstall target -------------------------------------------------------
-configure_file(
-	"${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
-	"${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-	IMMEDIATE @ONLY)
+if(${KDE4_FOUND})
+	install(FILES vtf.desktop DESTINATION "${SERVICES_INSTALL_DIR}/qimageioplugins")
+else()
+# ---- uninstall target (KDE creates it for us) -------------------------------
+	configure_file(
+		"${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+		"${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+		IMMEDIATE @ONLY)
 
-add_custom_target(uninstall
-	COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
+	add_custom_target(uninstall
+		COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
+endif()

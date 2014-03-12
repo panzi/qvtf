@@ -24,6 +24,8 @@
 
 class ValveTextureFilePlugin : public QImageIOPlugin {
     Q_OBJECT
+    Q_CLASSINFO("author", "Mathias Panzenböck")
+    Q_CLASSINFO("url", "https://github.com/panzi/qvtf")
 
 public:
 
