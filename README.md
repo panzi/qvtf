@@ -2,6 +2,12 @@ QVTF
 ====
 
 QImageIO plugin to load Valve Texture Files (read-only).
+Using this you will be able to view VTF files in Qt programs like Gwenview.
+
+In order to view thumbnails in KDE programs like Dolphin see [KIO Thumbnail
+VTF Plugin](https://github.com/panzi/KIO-VTF-Thumb-Creator) and for a general
+read-only integration into Gtk+ (e.g. view VTF images in Eye of GNOME) see
+[pixbufloader-vtf](https://github.com/panzi/pixbufloader-vtf).
 
 ### Setup
 
