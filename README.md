@@ -21,6 +21,10 @@ read-only integration into Gtk+ (e.g. view VTF images in Eye of GNOME) see
 ### Dependencies
 
  * [VTFLib](https://github.com/panzi/VTFLib)
+ 
+Optional:
+
+* Developer package for kdelibs. This is **kdelibs5-dev** on Debian-like systems or **kdelibs-devel** on Fedora.
 
 ### License
 
