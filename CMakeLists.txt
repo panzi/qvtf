@@ -6,6 +6,7 @@ project(qvtf)
 find_package(Qt4 REQUIRED)
 find_package(PkgConfig REQUIRED)
 find_package(KDE4) # optional, only for extra .desktop file installation
+find_package(SharedMimeInfo 0.60) # optional, for MIME type installation
 
 pkg_check_modules(VTFLIB REQUIRED VTFLib)
 
@@ -49,4 +50,9 @@ else()
 
 	add_custom_target(uninstall
 		COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
+endif()
+
+if(${SHAREDMIMEINFO_FOUND})
+	install(FILES vtf.xml DESTINATION ${XDG_MIME_INSTALL_DIR})
+	update_xdg_mimetypes(${XDG_MIME_INSTALL_DIR})
 endif()
