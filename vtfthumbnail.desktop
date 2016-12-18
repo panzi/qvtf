@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Service
+Name=Source Engine Textures
+X-KDE-ServiceTypes=ThumbCreator
+MimeType=image/x-vtf;
+X-KDE-Library=imagethumbnail
+CacheThumbnail=true

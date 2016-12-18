@@ -14,7 +14,7 @@ read-only integration into Gtk+ (e.g. view VTF images in Eye of GNOME) see
 	git clone https://github.com/panzi/qvtf.git
 	mkdir qvtf/build
 	cd qvtf/build
-	cmake .. -DCMAKE_BUILD_TYPE=Release
+	cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
 	make
 	sudo make install
 	
