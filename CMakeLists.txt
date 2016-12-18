@@ -70,8 +70,10 @@ endif()
 
 if (${ECM_FOUND})
 	install(FILES vtf.desktop DESTINATION "${KDE_INSTALL_KSERVICES5DIR}/qimageioplugins")
+	install(FILES vtfthumbnail.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 elseif(${KDE4_FOUND})
 	install(FILES vtf.desktop DESTINATION "${SERVICES_INSTALL_DIR}/qimageioplugins")
+	install(FILES vtfthumbnail.desktop DESTINATION ${SERVICES_INSTALL_DIR})
 else()
 # ---- uninstall target (KDE creates it for us) -------------------------------
 	configure_file(
