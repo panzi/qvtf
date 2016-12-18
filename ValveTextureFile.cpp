@@ -22,8 +22,11 @@
 #include <QImage>
 #include <QVariant>
 
+
+#if QT_VERSION < 0x050000
 Q_EXPORT_STATIC_PLUGIN(ValveTextureFilePlugin)
 Q_EXPORT_PLUGIN2(ValveTextureFile, ValveTextureFilePlugin)
+#endif // QT_VERSION < 0x050000
 
 QImageIOPlugin::Capabilities ValveTextureFilePlugin::capabilities(QIODevice *device, const QByteArray &format) const {
     if (format.isNull() && !device) {
@@ -41,9 +44,11 @@ QImageIOPlugin::Capabilities ValveTextureFilePlugin::capabilities(QIODevice *dev
     return CanRead;
 }
 
+#if QT_VERSION < 0x050000
 QStringList ValveTextureFilePlugin::keys() const {
     return QStringList() << "vtf";
 }
+#endif
 
 QImageIOHandler* ValveTextureFilePlugin::create(QIODevice *device, const QByteArray &format) const {
     if (format.isNull() || format.toLower() == "vtf") {
@@ -119,124 +124,124 @@ int ValveTextureFileHandler::nextImageDelay() const {
 static QStringList vtfFlagNames(vlUInt flags) {
     QStringList sflags;
     if (flags & TEXTUREFLAGS_POINTSAMPLE) {
-        sflags.append("PointSample");
+        sflags.append(QLatin1String("PointSample"));
     }
     if (flags & TEXTUREFLAGS_TRILINEAR) {
-        sflags.append("Trilinear");
+        sflags.append(QLatin1String("Trilinear"));
     }
     if (flags & TEXTUREFLAGS_CLAMPS) {
-        sflags.append("ClampS");
+        sflags.append(QLatin1String("ClampS"));
     }
     if (flags & TEXTUREFLAGS_CLAMPT) {
-        sflags.append("ClampT");
+        sflags.append(QLatin1String("ClampT"));
     }
     if (flags & TEXTUREFLAGS_ANISOTROPIC) {
-        sflags.append("Anisotropic");
+        sflags.append(QLatin1String("Anisotropic"));
     }
     if (flags & TEXTUREFLAGS_HINT_DXT5) {
-        sflags.append("Hint DXT5");
+        sflags.append(QLatin1String("Hint DXT5"));
     }
     if (flags & TEXTUREFLAGS_SRGB) {
-        sflags.append("SRGB");
+        sflags.append(QLatin1String("SRGB"));
     }
     if (flags & TEXTUREFLAGS_DEPRECATED_NOCOMPRESS) {
-        sflags.append("Deprecated NoCompress");
+        sflags.append(QLatin1String("Deprecated NoCompress"));
     }
     if (flags & TEXTUREFLAGS_NORMAL) {
-        sflags.append("Normal");
+        sflags.append(QLatin1String("Normal"));
     }
     if (flags & TEXTUREFLAGS_NOMIP) {
-        sflags.append("NoMip");
+        sflags.append(QLatin1String("NoMip"));
     }
     if (flags & TEXTUREFLAGS_NOLOD) {
-        sflags.append("NoLOD");
+        sflags.append(QLatin1String("NoLOD"));
     }
     if (flags & TEXTUREFLAGS_MINMIP) {
-        sflags.append("MinMip");
+        sflags.append(QLatin1String("MinMip"));
     }
     if (flags & TEXTUREFLAGS_PROCEDURAL) {
-        sflags.append("Procedural");
+        sflags.append(QLatin1String("Procedural"));
     }
     if (flags & TEXTUREFLAGS_ONEBITALPHA) {
-        sflags.append("OneBitAlpha");
+        sflags.append(QLatin1String("OneBitAlpha"));
     }
     if (flags & TEXTUREFLAGS_EIGHTBITALPHA) {
-        sflags.append("EightBitAlpha");
+        sflags.append(QLatin1String("EightBitAlpha"));
     }
     if (flags & TEXTUREFLAGS_ENVMAP) {
-        sflags.append("EnvMap");
+        sflags.append(QLatin1String("EnvMap"));
     }
     if (flags & TEXTUREFLAGS_RENDERTARGET) {
-        sflags.append("RenderTarget");
+        sflags.append(QLatin1String("RenderTarget"));
     }
     if (flags & TEXTUREFLAGS_DEPTHRENDERTARGET) {
-        sflags.append("DepthRenderTarget");
+        sflags.append(QLatin1String("DepthRenderTarget"));
     }
     if (flags & TEXTUREFLAGS_NODEBUGOVERRIDE) {
-        sflags.append("NoDebugOverride");
+        sflags.append(QLatin1String("NoDebugOverride"));
     }
     if (flags & TEXTUREFLAGS_SINGLECOPY) {
-        sflags.append("SingleCopy");
+        sflags.append(QLatin1String("SingleCopy"));
     }
     if (flags & TEXTUREFLAGS_UNUSED0) {
-        sflags.append("Unused0");
+        sflags.append(QLatin1String("Unused0"));
     }
     if (flags & TEXTUREFLAGS_DEPRECATED_ONEOVERMIPLEVELINALPHA) {
-        sflags.append("Deprecated OneOverMipLevelInAlpha");
+        sflags.append(QLatin1String("Deprecated OneOverMipLevelInAlpha"));
     }
     if (flags & TEXTUREFLAGS_UNUSED1) {
-        sflags.append("Unused1");
+        sflags.append(QLatin1String("Unused1"));
     }
     if (flags & TEXTUREFLAGS_DEPRECATED_PREMULTCOLORBYONEOVERMIPLEVEL) {
-        sflags.append("Deprecated PremultColorByOneOverMipLevel");
+        sflags.append(QLatin1String("Deprecated PremultColorByOneOverMipLevel"));
     }
     if (flags & TEXTUREFLAGS_UNUSED2) {
-        sflags.append("Unused2");
+        sflags.append(QLatin1String("Unused2"));
     }
     if (flags & TEXTUREFLAGS_DEPRECATED_NORMALTODUDV) {
-        sflags.append("Deprecated NormalTODUDV");
+        sflags.append(QLatin1String("Deprecated NormalTODUDV"));
     }
     if (flags & TEXTUREFLAGS_UNUSED3) {
-        sflags.append("Unused3");
+        sflags.append(QLatin1String("Unused3"));
     }
     if (flags & TEXTUREFLAGS_DEPRECATED_ALPHATESTMIPGENERATION) {
-        sflags.append("Deprecated AlphaTestMipGeneration");
+        sflags.append(QLatin1String("Deprecated AlphaTestMipGeneration"));
     }
     if (flags & TEXTUREFLAGS_NODEPTHBUFFER) {
-        sflags.append("NoDepthBuffer");
+        sflags.append(QLatin1String("NoDepthBuffer"));
     }
     if (flags & TEXTUREFLAGS_UNUSED4) {
-        sflags.append("Unused4");
+        sflags.append(QLatin1String("Unused4"));
     }
     if (flags & TEXTUREFLAGS_DEPRECATED_NICEFILTERED) {
-        sflags.append("Deprecated NiceFiltered");
+        sflags.append(QLatin1String("Deprecated NiceFiltered"));
     }
     if (flags & TEXTUREFLAGS_CLAMPU) {
-        sflags.append("ClampU");
+        sflags.append(QLatin1String("ClampU"));
     }
     if (flags & TEXTUREFLAGS_VERTEXTEXTURE) {
-        sflags.append("VertexTexture");
+        sflags.append(QLatin1String("VertexTexture"));
     }
     if (flags & TEXTUREFLAGS_SSBUMP) {
-        sflags.append("SSBump");
+        sflags.append(QLatin1String("SSBump"));
     }
     if (flags & TEXTUREFLAGS_UNUSED5) {
-        sflags.append("Unused5");
+        sflags.append(QLatin1String("Unused5"));
     }
     if (flags & TEXTUREFLAGS_DEPRECATED_UNFILTERABLE_OK) {
-        sflags.append("Deprecated Unfilterable Ok");
+        sflags.append(QLatin1String("Deprecated Unfilterable Ok"));
     }
     if (flags & TEXTUREFLAGS_BORDER) {
-        sflags.append("Border");
+        sflags.append(QLatin1String("Border"));
     }
     if (flags & TEXTUREFLAGS_DEPRECATED_SPECVAR_RED) {
-        sflags.append("Deprecated SpecVar Red");
+        sflags.append(QLatin1String("Deprecated SpecVar Red"));
     }
     if (flags & TEXTUREFLAGS_DEPRECATED_SPECVAR_ALPHA) {
-        sflags.append("Deprecated SpeCVar Alpha");
+        sflags.append(QLatin1String("Deprecated SpeCVar Alpha"));
     }
     if (flags & TEXTUREFLAGS_LAST) {
-        sflags.append("Last");
+        sflags.append(QLatin1String("Last"));
     }
     return sflags;
 }
@@ -266,7 +271,7 @@ QVariant ValveTextureFileHandler::option(ImageOption option) const {
             vtf.GetReflectivity(rX, rY, rZ);
             SVTFImageFormatInfo formatInfo = VTFLib::CVTFFile::GetImageFormatInfo(vtf.GetFormat());
 
-            QString descr = QString(
+            QString descr = QString::fromUtf8(
                 "Version: %1.%2\n\n"
                 "Format: %3\n\n"
                 "Depth: %4\n\n"
@@ -282,7 +287,7 @@ QVariant ValveTextureFileHandler::option(ImageOption option) const {
                 "Compressed: %16\n\n")
                     .arg(vtf.GetMajorVersion())
                     .arg(vtf.GetMinorVersion())
-                    .arg(formatInfo.lpName)
+                    .arg(QString::fromUtf8(formatInfo.lpName))
                     .arg(vtf.GetDepth())
                     .arg(vtf.GetBumpmapScale())
                     .arg(rX).arg(rY).arg(rZ)
@@ -290,26 +295,26 @@ QVariant ValveTextureFileHandler::option(ImageOption option) const {
                     .arg(vtf.GetMipmapCount())
                     .arg(vtf.GetFrameCount())
                     .arg(vtf.GetStartFrame())
-                    .arg(vtfFlagNames(vtf.GetFlags()).join(", "))
+                    .arg(vtfFlagNames(vtf.GetFlags()).join(QLatin1String(", ")))
                     .arg(formatInfo.uiBitsPerPixel)
-                    .arg(formatInfo.uiAlphaBitsPerPixel > 0 ? "True" : "False")
-                    .arg(formatInfo.bIsCompressed ? "True" : "False");
+                    .arg(QLatin1String(formatInfo.uiAlphaBitsPerPixel > 0 ? "True" : "False"))
+                    .arg(QLatin1String(formatInfo.bIsCompressed ? "True" : "False"));
 
             if (vtf.GetHasThumbnail()) {
                 SVTFImageFormatInfo thumbFormatInfo = VTFLib::CVTFFile::GetImageFormatInfo(vtf.GetThumbnailFormat());
 
-                descr += QString(
+                descr += QString::fromUtf8(
                     "Thumbnail Format: %1\n\n"
                     "Thumbnail Size: %2x%3\n\n"
                     "Thumbnail Bits Per Pixel: %4\n\n"
                     "Thumbnail Alpha Channel: %5\n\n"
                     "Thumbnail Compressed: %6\n\n")
-                        .arg(thumbFormatInfo.lpName)
+                        .arg(QString::fromUtf8(thumbFormatInfo.lpName))
                         .arg(vtf.GetThumbnailWidth())
                         .arg(vtf.GetThumbnailHeight())
                         .arg(thumbFormatInfo.uiBitsPerPixel)
-                        .arg(thumbFormatInfo.uiAlphaBitsPerPixel > 0 ? "True" : "False")
-                        .arg(thumbFormatInfo.bIsCompressed ? "True" : "False");
+                        .arg(QLatin1String(thumbFormatInfo.uiAlphaBitsPerPixel > 0 ? "True" : "False"))
+                        .arg(QLatin1String(thumbFormatInfo.bIsCompressed ? "True" : "False"));
             }
 
             return descr;
@@ -398,16 +403,16 @@ bool ValveTextureFileHandler::read(QImage *image) {
         vtf.GetReflectivity(rX, rY, rZ);
         SVTFImageFormatInfo formatInfo = VTFLib::CVTFFile::GetImageFormatInfo(vtf.GetFormat());
 
-        image->setText(QLatin1String("Version"),QString("%1.%2").arg(vtf.GetMajorVersion()).arg(vtf.GetMinorVersion()));
+        image->setText(QLatin1String("Version"),QString::fromUtf8("%1.%2").arg(vtf.GetMajorVersion()).arg(vtf.GetMinorVersion()));
         image->setText(QLatin1String("Format"),QLatin1String(formatInfo.lpName));
         image->setText(QLatin1String("Depth"),QString::number(vtf.GetDepth()));
         image->setText(QLatin1String("Bumpmap Scale"),QString::number(vtf.GetBumpmapScale()));
-        image->setText(QLatin1String("Reflectivity"),QString("%1, %2, %3").arg(rX).arg(rY).arg(rZ));
+        image->setText(QLatin1String("Reflectivity"),QString::fromUtf8("%1, %2, %3").arg(rX).arg(rY).arg(rZ));
         image->setText(QLatin1String("Faces"),QString::number(vtf.GetFaceCount()));
         image->setText(QLatin1String("Mipmaps"),QString::number(vtf.GetMipmapCount()));
         image->setText(QLatin1String("Frames"),QString::number(vtf.GetFrameCount()));
         image->setText(QLatin1String("Start Frame"),QString::number(vtf.GetStartFrame()));
-        image->setText(QLatin1String("Flags"),vtfFlagNames(vtf.GetFlags()).join(", "));
+        image->setText(QLatin1String("Flags"),vtfFlagNames(vtf.GetFlags()).join(QLatin1String(", ")));
         image->setText(QLatin1String("Bits Per Pixel"),QString::number(formatInfo.uiBitsPerPixel));
         image->setText(QLatin1String("Alpha Channel"),QLatin1String(formatInfo.uiAlphaBitsPerPixel > 0 ? "True" : "False"));
         image->setText(QLatin1String("Compressed"),QLatin1String(formatInfo.bIsCompressed ? "True" : "False"));
@@ -416,7 +421,7 @@ bool ValveTextureFileHandler::read(QImage *image) {
             SVTFImageFormatInfo thumbFormatInfo = VTFLib::CVTFFile::GetImageFormatInfo(vtf.GetThumbnailFormat());
 
             image->setText(QLatin1String("Thumbnail Format"),QLatin1String(thumbFormatInfo.lpName));
-            image->setText(QLatin1String("Thumbnail Size"),QString("%1x%2").arg(vtf.GetThumbnailWidth()).arg(vtf.GetThumbnailHeight()));
+            image->setText(QLatin1String("Thumbnail Size"),QString::fromUtf8("%1x%2").arg(vtf.GetThumbnailWidth()).arg(vtf.GetThumbnailHeight()));
             image->setText(QLatin1String("Thumbnail Bits Per Pixel"),QString::number(thumbFormatInfo.uiBitsPerPixel));
             image->setText(QLatin1String("Thumbnail Alpha Channel"),QLatin1String(thumbFormatInfo.uiAlphaBitsPerPixel > 0 ? "True" : "False"));
             image->setText(QLatin1String("Thumbnail Compressed"),QLatin1String(thumbFormatInfo.bIsCompressed ? "True" : "False"));
