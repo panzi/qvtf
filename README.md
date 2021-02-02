@@ -11,31 +11,32 @@ read-only integration into Gtk+ (e.g. view VTF images in Eye of GNOME) see
 
 ### Setup for Qt4
 
-	git clone https://github.com/panzi/qvtf.git
-	mkdir qvtf/build
-	cd qvtf/build
-	cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
-	make
-	sudo make install
-	
+    git clone https://github.com/panzi/qvtf.git
+    mkdir qvtf/build
+    cd qvtf/build
+    cmake .. -DQT4VTF=yes -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+    make
+    sudo make install
+
 ### Setup for Qt5
 
-	git clone https://github.com/panzi/qvtf.git
-	mkdir qvtf/build
-	cd qvtf/build
-	cmake .. -DQT5VTF=yes -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release 
-	make
-	sudo make install
+    git clone https://github.com/panzi/qvtf.git
+    mkdir qvtf/build
+    cd qvtf/build
+    cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+    make
+    sudo make install
 
 ### Dependencies
 
- * [VTFLib](https://github.com/panzi/VTFLib)
- * pkg-config
- 
+* [VTFLib](https://github.com/panzi/VTFLib)
+* pkg-config
+
 Optional:
 
 * For KDE4: Developer package for kdelibs. This is **kdelibs5-dev** on Debian-like systems or **kdelibs-devel** on Fedora.
 * For KDE5: extra-cmake-modules
+* shared-mime-info
 
 ### License
 

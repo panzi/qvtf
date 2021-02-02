@@ -30,15 +30,15 @@ Q_EXPORT_PLUGIN2(ValveTextureFile, ValveTextureFilePlugin)
 
 QImageIOPlugin::Capabilities ValveTextureFilePlugin::capabilities(QIODevice *device, const QByteArray &format) const {
     if (format.isNull() && !device) {
-        return 0;
+        return QImageIOPlugin::Capabilities();
     }
 
     if (!format.isNull() && format.toLower() != "vtf") {
-        return 0;
+        return QImageIOPlugin::Capabilities();
     }
 
     if (device && !ValveTextureFileHandler::canRead(device)) {
-        return 0;
+        return QImageIOPlugin::Capabilities();
     }
 
     return CanRead;
@@ -57,7 +57,7 @@ QImageIOHandler* ValveTextureFilePlugin::create(QIODevice *device, const QByteAr
         handler->setFormat("vtf");
         return handler;
     }
-    return 0;
+    return nullptr;
 }
 
 bool ValveTextureFileHandler::canRead(QIODevice *device) {
