@@ -31,9 +31,6 @@ public:
 
     Capabilities capabilities(QIODevice *device, const QByteArray &format) const;
     QImageIOHandler* create(QIODevice *device, const QByteArray &format) const;
-#if QT_VERSION < 0x050000
-    QStringList keys() const;
-#endif
 };
 
 class ValveTextureFileHandler : public QImageIOHandler {
