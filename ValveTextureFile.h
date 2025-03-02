@@ -26,9 +26,7 @@ class ValveTextureFilePlugin : public QImageIOPlugin {
     Q_OBJECT
     Q_CLASSINFO("author", "Mathias Panzenböck")
     Q_CLASSINFO("url", "https://github.com/panzi/qvtf")
-#if QT_VERSION >= 0x050000
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QImageIOHandlerFactoryInterface" FILE "qvtf.json")
-#endif // QT_VERSION >= 0x050000
 public:
 
     Capabilities capabilities(QIODevice *device, const QByteArray &format) const;

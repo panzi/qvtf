@@ -9,23 +9,16 @@ VTF Plugin](https://github.com/panzi/KIO-VTF-Thumb-Creator) and for a general
 read-only integration into Gtk+ (e.g. view VTF images in Eye of GNOME) see
 [pixbufloader-vtf](https://github.com/panzi/pixbufloader-vtf).
 
-### Setup for Qt4
+### Setup
 
-    git clone https://github.com/panzi/qvtf.git
-    mkdir qvtf/build
-    cd qvtf/build
-    cmake .. -DQT4VTF=yes -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
-    make
-    sudo make install
-
-### Setup for Qt5
-
-    git clone https://github.com/panzi/qvtf.git
-    mkdir qvtf/build
-    cd qvtf/build
-    cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
-    make
-    sudo make install
+```bash
+git clone https://github.com/panzi/qvtf.git
+mkdir qvtf/build
+cd qvtf/build
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+make
+sudo make install
+```
 
 ### Dependencies
 
@@ -34,8 +27,6 @@ read-only integration into Gtk+ (e.g. view VTF images in Eye of GNOME) see
 
 Optional:
 
-* For KDE4: Developer package for kdelibs. This is **kdelibs5-dev** on Debian-like systems or **kdelibs-devel** on Fedora.
-* For KDE5: extra-cmake-modules
 * shared-mime-info
 
 ### License

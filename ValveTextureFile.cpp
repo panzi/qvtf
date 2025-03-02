@@ -23,11 +23,6 @@
 #include <QVariant>
 
 
-#if QT_VERSION < 0x050000
-Q_EXPORT_STATIC_PLUGIN(ValveTextureFilePlugin)
-Q_EXPORT_PLUGIN2(ValveTextureFile, ValveTextureFilePlugin)
-#endif // QT_VERSION < 0x050000
-
 QImageIOPlugin::Capabilities ValveTextureFilePlugin::capabilities(QIODevice *device, const QByteArray &format) const {
     if (format.isNull() && !device) {
         return QImageIOPlugin::Capabilities();
@@ -43,12 +38,6 @@ QImageIOPlugin::Capabilities ValveTextureFilePlugin::capabilities(QIODevice *dev
 
     return CanRead;
 }
-
-#if QT_VERSION < 0x050000
-QStringList ValveTextureFilePlugin::keys() const {
-    return QStringList() << "vtf";
-}
-#endif
 
 QImageIOHandler* ValveTextureFilePlugin::create(QIODevice *device, const QByteArray &format) const {
     if (format.isNull() || format.toLower() == "vtf") {
